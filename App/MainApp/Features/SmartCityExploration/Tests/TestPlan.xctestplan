@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "DEFAULT",
+      "name" : "Default",
+      "options" : {
+        "targetForVariableExpansion" : {
+          "containerPath" : "container:SmartCityExploration.xcodeproj",
+          "identifier" : "SmartCityExplorationTests",
+          "name" : "SmartCityExplorationTests"
+        }
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:SmartCityExploration.xcodeproj",
+          "identifier" : "SmartCityExploration",
+          "name" : "SmartCityExploration"
+        }
+      ]
+    },
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:SmartCityExploration.xcodeproj",
+        "identifier" : "SmartCityExplorationTests",
+        "name" : "SmartCityExplorationTests"
+      }
+    }
+  ],
+  "version" : 1
+}

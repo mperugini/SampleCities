@@ -1,0 +1,50 @@
+name: SmartCityExploration
+options:
+  bundleIdPrefix: com.smartcity
+  deploymentTarget:
+    iOS: 17.0
+  createIntermediateGroups: true
+  
+packages:
+  Factory:
+    url: https://github.com/hmlongco/Factory
+    from: 2.3.0
+  
+targets:
+  SmartCityExploration:
+    type: application
+    platform: iOS
+    sources:
+      - App/MainApp
+    resources:
+      - App/MainApp/cities.json
+      - App/MainApp/CoreData/CityDataModel.xcdatamodeld
+    settings:
+      SWIFT_VERSION: "5.0"
+      SWIFT_STRICT_CONCURRENCY: "complete"
+      ENABLE_TESTABILITY: true
+    dependencies:
+      - package: Factory
+    info:
+      path: App/MainApp/Info.plist
+      properties:
+        UILaunchStoryboardName: LaunchScreen
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          
+  SmartCityExplorationTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - App/MainApp/Features/SmartCityExploration/Tests
+    dependencies:
+      - target: SmartCityExploration
+    settings:
+      SWIFT_VERSION: "5.0"
