@@ -4,7 +4,7 @@
 **Versión:** 1.0  
 **Fecha:** Julio 2025  
 **Autor:** Mariano Perugini 
-**Stakeholders:** Equipo de Desarrollo, Product Manager, IT Manager, UX
+**Stakeholders:** Equipo de Desarrollo, Product Manager, IT Manager, UX 
 
 ---
 
@@ -64,6 +64,170 @@ This document presents the complete technical solution for the "Smart City Explo
 <p align="center">
   <img src="https://github.com/mperugini/SampleCities/blob/private/mperugini/docs/docs/assets/arq1.png?raw=true" width="600" />
 </p>
+
+
+### 2.3 Key Components
+
+#### 2.3.1 Search Engine (CitySearchIndex)
+```swift
+actor CitySearchIndex {
+    func search(prefix: String, maxResults: Int = 50) -> [City] // Adaptive O(n) or O(log n)
+    func buildIndex(from cities: [City]) async // O(n log n) one-time
+    // Hybrid approach: linear search for short prefixes, binary for long ones
+}
+```
+
+#### 2.3.2 Weather Integration
+```swift
+protocol WeatherService {
+    func getWeather(for city: City) async throws -> WeatherInfo
+    func cacheWeather(_ weather: WeatherInfo, for city: City)
+}
+```
+
+---
+
+## 3. Implementation Strategy
+
+### 3.1 Technology Stack
+
+<table>
+ <thead>
+   <tr>
+     <th>Component</th>
+     <th>Technology</th>
+     <th>Rationale</th>
+   </tr>
+ </thead>
+ <tbody>
+   <tr>
+     <td><strong>Language</strong></td>
+     <td>Swift 6.0</td>
+     <td>Latest features, performance, type safety</td>
+   </tr>
+   <tr>
+     <td><strong>UI Framework</strong></td>
+     <td>SwiftUI</td>
+     <td>Declarative, responsive, modern</td>
+   </tr>
+   <tr>
+     <td><strong>Persistence</strong></td>
+     <td>Core Data</td>
+     <td>Native, optimized, ACID compliance</td>
+   </tr>
+   <tr>
+     <td><strong>Networking</strong></td>
+     <td>URLSession + async/await</td>
+     <td>Native, modern, no external dependencies</td>
+   </tr>
+   <tr>
+     <td><strong>Maps</strong></td>
+     <td>MapKit</td>
+     <td>Native, optimized, no extra cost</td>
+   </tr>
+   <tr>
+     <td><strong>Testing</strong></td>
+     <td>XCTest</td>
+     <td>Native, integrated, complete</td>
+   </tr>
+ </tbody>
+</table>
+
+### 3.2 External Dependencies
+- **OpenWeather API:** Real-time weather data
+- **Core Data:** Local persistence (iOS native)
+- **MapKit:** Interactive maps (iOS native)
+
+
+### 3.3 Effort Estimation
+
+<table>
+ <thead>
+   <tr>
+     <th>Sprint</th>
+     <th>Duration</th>
+     <th>Focus</th>
+   </tr>
+ </thead>
+ <tbody>
+   <tr>
+     <td><strong>Sprint 1</strong></td>
+     <td>2 weeks</td>
+     <td>Architecture + Search Engine</td>
+   </tr>
+   <tr>
+     <td><strong>Sprint 2</strong></td>
+     <td>2 weeks</td>
+     <td>UI + Maps + Weather + Performance Tunning</td>
+   </tr>
+   <tr>
+     <td><strong>Sprint 3</strong></td>
+     <td>2 weeks</td>
+     <td>Favorites + Testing + Polish</td>
+   </tr>
+   <tr>
+     <td><strong>Total</strong></td>
+     <td>6 weeks</td>
+     <td></td>
+   </tr>
+ </tbody>
+</table>
+
+
+---
+
+## 4. Team Organization & Work Distribution
+
+### 4.1 Team Structure
+
+#### 4.1.1 Roles & Responsibilities
+
+| Role | Key Responsibilities |
+|------|---------------------|
+| **Tech Lead** | • Architecture and technical decisions<br>• Code reviews and mentoring<br>• Performance optimization<br>• Stakeholder communication |
+| **Senior iOS Developer (1)** | • Domain layer implementation<br>• Search engine optimization<br>• Core Data setup<br>• Unit testing |
+| **Mid iOS Developer (1)** | • Data layer implementation<br>• Network services<br>• Weather integration<br>• Integration testing |
+| **Junior iOS Developer (1)** | • Presentation layer (Views)<br>• UI components<br>• Basic ViewModels<br>• UI testing |
+| **QA Engineer (1)** | • Test planning<br>• Manual testing<br>• Performance testing<br>• User acceptance testing |
+
+### 4.2 Work Distribution by Sprint
+
+#### Sprint 1: Foundation + Search Engine
+```
+Tech Lead:     Architecture setup, dependency injection, SearchIndex 
+Senior Dev:    Domain models, repository protocols, search use cases 
+Mid Dev:       Core Data stack, basic networking, performance testing 
+```
+
+#### Sprint 2: UI + Maps + Weather 
+```
+Tech Lead:     MapKit integration, weather service architecture 
+Senior Dev:    Search UI, results list, weather overlay 
+Mid Dev:       City cards, navigation, cache implementation
+```
+
+#### Sprint 3: Favorites + Testing + Polish 
+```
+Tech Lead:     Performance optimization, final architecture review, feature flag Remote config 
+Senior Dev:    Favorites use cases, Core Data models, unit testing
+Mid Dev:       Favorites UI, integration testing, UI testing 
+```
+
+### 4.3 Code Quality Guardrails
+
+#### 4.3.1 Development Process
+1. **Feature Branch:** Each feature in a separate branch
+2. **Code Review:** Mandatory, minimum 2 approvals
+3. **Automated Testing:** CI/CD pipeline with automated tests (Github Actions/ Xcode Cloud)
+4. **Performance Gates:** Performance metrics in every PR
+
+#### 4.3.2 Coding Standards
+- **SwiftLint:** Strict rules configured
+- **Documentation:** 100% of public APIs documented
+- **Test Coverage:** Minimum 80% for new features
+- **Performance:** Search < 100ms, UI < 16ms
+
+---
 
 
 
