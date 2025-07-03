@@ -61,4 +61,9 @@ This document presents the complete technical solution for the "Smart City Explo
 
 ###  2.2 Layered Architecture
 
+<p align="center">
+  <img src="https://github.com/mperugini/SampleCities/blob/private/mperugini/docs/docs/assets/arq1.png?raw=true" width="600" />
+</p>
+
+
 
