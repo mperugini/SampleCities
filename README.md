@@ -37,37 +37,33 @@ Una aplicación iOS para explorar y buscar ciudades con funcionalidades avanzada
 
 ### Clean Architecture + MVVM
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    PRESENTATION LAYER                       │
-├─────────────────────────────────────────────────────────────┤
-│  Views (SwiftUI) │ ViewModels │ Coordinators               │
-│  • SmartCitySearchView                                       │
-│  • CityDetailView                                            │
-│  • CityMapView                                               │
-│  • WeatherOverlayView                                        │
-└─────────────────────────────────────────────────────────────┘
-                                │
-┌─────────────────────────────────────────────────────────────┐
-│                     DOMAIN LAYER                            │
-├─────────────────────────────────────────────────────────────┤
-│  UseCases │ Entities │ Repositories │ Services              │
-│  • SearchCityUseCase                                         │
-│  • FavoriteCitiesUseCase                                     │
-│  • CitySearchIndex                                           │
-│  • CompressedRadixTrie (WIP)                                       │
-└─────────────────────────────────────────────────────────────┘
-                                │
-┌─────────────────────────────────────────────────────────────┐
-│                      DATA LAYER                             │
-├─────────────────────────────────────────────────────────────┤
-│  Repositories │ DataSources │ Network │ CoreData            │
-│  • CityRepositoryImpl                                       │
-│  • CityDataManager                                          │
-│  • NetworkService                                           │
-│  • WeatherService                                           │
-└─────────────────────────────────────────────────────────────┘
-```
+## iOS Clean Architecture
+
+### 📱 Presentation Layer
+| Component Type | Components |
+|----------------|------------|
+| **Views (SwiftUI)** | SmartCitySearchView, CityDetailView, CityMapView, WeatherOverlayView |
+| **ViewModels** | Business logic presentation |
+| **Coordinators** | Navigation flow control |
+
+### 🔧 Domain Layer  
+| Component Type | Components |
+|----------------|------------|
+| **UseCases** | SearchCityUseCase, FavoriteCitiesUseCase |
+| **Entities** | Core business models |
+| **Repositories** | CitySearchIndex |
+| **Services** | CompressedRadixTrie *(WIP)* |
+
+### 💾 Data Layer
+| Component Type | Components |
+|----------------|------------|
+| **Repositories** | CityRepositoryImpl |
+| **DataSources** | CityDataManager |
+| **Network** | NetworkService |
+| **CoreData** | WeatherService |
+
+**Architecture Flow:** Presentation ↓ Domain ↓ Data  
+**Pattern:** Clean Architecture with MVVM
 
 ### Componentes Principales
 
