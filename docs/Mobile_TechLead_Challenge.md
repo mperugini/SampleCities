@@ -286,6 +286,19 @@ Mid Dev:       Favorites UI, integration testing, UI testing
 ### 4.3 Code Quality Guardrails
 
 #### 4.3.1 Development Process
+
+##### Git Workflow
+
+- **main**
+  - **develop**
+    - feature/search-implementation
+    - feature/map-integration
+    - feature/weather-service
+    - feature/favorites
+  - release/1.0
+
+---
+
 1. **Feature Branch:** Each feature in a separate branch
 2. **Code Review:** Mandatory, minimum 2 approvals
 3. **Automated Testing:** CI/CD pipeline with automated tests (Github Actions/ Xcode Cloud)
