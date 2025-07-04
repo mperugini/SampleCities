@@ -379,6 +379,7 @@ public actor CityDataManager: CityDataManagerProtocol, Sendable {
                 }
                 
                 try context.save()
+                context.reset() // Limpia la cache
                 
             } catch {
                 // print("[CityDataManager] Error saving cities to Core Data: \(error)")
