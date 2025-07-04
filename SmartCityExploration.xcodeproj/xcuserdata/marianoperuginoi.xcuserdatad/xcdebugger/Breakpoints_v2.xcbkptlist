@@ -158,8 +158,8 @@
             filePath = "App/MainApp/Features/SmartCityExploration/Data/CityDataManager.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "398"
-            endingLineNumber = "398"
+            startingLineNumber = "404"
+            endingLineNumber = "404"
             landmarkName = "_searchCitiesByName(prefix:limit:)"
             landmarkType = "7">
          </BreakpointContent>

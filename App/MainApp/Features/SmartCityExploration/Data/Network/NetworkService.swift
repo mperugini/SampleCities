@@ -46,26 +46,24 @@ public protocol NetworkServiceProtocol: Sendable {
 public actor NetworkService: NetworkServiceProtocol {
     private let session = URLSession.shared
     
-    //FixMe: Esta url no deberia estar aca, incluso deberia descargar resultados paginados para mejorar la experiencia del usuario, indicando que aun se estan descargando ciudades pero ya pudiendo bucar
-    
-    private let citiesURL = URL(string: "https://gist.githubusercontent.com/hernan-uala/dce8843a8edbe0b0018b32e137bc2b3a/raw/0996accf70cb0ca0e16f9a99e0ee185fafca7af1/cities.json")!
-    
     public init() {}
     
     public func downloadCities() async throws -> [CityResponse] {
-        // print("[NetworkService] Starting download from: \(citiesURL)")
+       
+        //ToDo: Esta url no deberia estar aca, incluso deberia descargar resultados paginados para mejorar la experiencia del usuario, indicando que aun se estan descargando ciudades pero ya pudiendo bucar
+        
+        guard let citiesURL = URL(string: "https://gist.githubusercontent.com/hernan-uala/dce8843a8edbe0b0018b32e137bc2b3a/raw/0996accf70cb0ca0e16f9a99e0ee185fafca7af1/cities.json")
+        else {
+            throw NetworkError.notFound
+        }
         
         let (data, response) = try await session.data(from: citiesURL)
         
         guard let httpResponse = response as? HTTPURLResponse else {
-            // print("[NetworkService] Invalid HTTP response type")
             throw NetworkError.invalidResponse
         }
         
-        // print("[NetworkService] HTTP Status: \(httpResponse.statusCode)")
-        
         guard 200...299 ~= httpResponse.statusCode else {
-            // print("[NetworkService] HTTP Error: \(httpResponse.statusCode)")
             throw NetworkError.invalidResponse
         }
         
