@@ -59,11 +59,72 @@ This document presents the complete technical solution for the "Smart City Explo
 - Binary Search Tree: O(log n) - good, but not optimized for prefix search
 - CompressedRadixTrie: O(k), but high implementation and maintenance complexity for the team and context
 
-###  2.2 Layered Architecture
+###  2.2.1 Layered Architecture
 
-<p align="center">
-  <img src="https://github.com/mperugini/SampleCities/blob/private/mperugini/docs/docs/assets/arq1.png?raw=true" width="600" />
-</p>
+graph TD
+    subgraph Presentation Layer
+        Views
+        ViewModels
+        Coordinators
+    end
+    subgraph Domain Layer
+        Entities
+        UseCases
+        Repositories
+    end
+    subgraph Data Layer
+        RepoImpl[Repository Implementations]
+        Network[Network Services]
+        Local[Local Storage]
+    end
+
+    Views --> ViewModels
+    ViewModels --> UseCases
+    UseCases --> Repositories
+    Repositories --> RepoImpl
+    RepoImpl --> Network
+    RepoImpl --> Local
+
+
+
+
+### 2.2.2 Data Flow Diagram
+
+flowchart LR
+    User -->|Types search| SearchView
+    SearchView -->|Updates| ViewModel
+    ViewModel -->|Executes| SearchUseCase
+    SearchUseCase -->|Queries| CitySearchIndex
+    CitySearchIndex -->|Returns results| SearchUseCase
+    SearchUseCase -->|Returns| ViewModel
+    ViewModel -->|Updates| SearchView
+    SearchView -->|Selects city| DetailView
+    DetailView -->|Fetches| WeatherService
+
+
+### 2.2.3 Sequence Diagram: Search Flow
+
+sequenceDiagram
+    participant U as User
+    participant V as SearchView
+    participant VM as ViewModel
+    participant UC as SearchUseCase
+    participant IDX as CitySearchIndex
+
+    U->>V: Type search text
+    V->>VM: onSearchTextChanged
+    VM->>UC: search(prefix)
+    UC->>IDX: search(prefix)
+    IDX-->>UC: [City]
+    UC-->>VM: [City]
+    VM-->>V: updateResults([City])
+    U->>V: Select city
+    V->>VM: onCitySelected
+    VM->>DetailView: showCityDetail(city)
+
+
+
+
 
 
 ### 2.3 Key Components
