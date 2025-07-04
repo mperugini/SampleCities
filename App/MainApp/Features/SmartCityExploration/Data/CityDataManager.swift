@@ -361,7 +361,14 @@ public actor CityDataManager: CityDataManagerProtocol, Sendable {
                 
                 // Save new cities
                 for city in cities {
-                    let entity = NSManagedObject(entity: NSEntityDescription.entity(forEntityName: "CityEntity", in: context)!, insertInto: context)
+                    
+                    guard let entityDescription = NSEntityDescription.entity(forEntityName: "CityEntity", in: context)
+                    else {
+                        print("[CityDataManager] Error: entity description not found")
+                        continue
+                    }
+                    
+                    let entity = NSManagedObject(entity:entityDescription, insertInto: context)
                     entity.setValue(Int32(city.id), forKey: "id")
                     entity.setValue(city.name, forKey: "name")
                     entity.setValue(city.country, forKey: "country")
@@ -372,7 +379,7 @@ public actor CityDataManager: CityDataManagerProtocol, Sendable {
                 }
                 
                 try context.save()
-                // print("[CityDataManager] Successfully saved \(cities.count) cities to Core Data")
+                context.reset() // Limpia la cache
                 
             } catch {
                 // print("[CityDataManager] Error saving cities to Core Data: \(error)")

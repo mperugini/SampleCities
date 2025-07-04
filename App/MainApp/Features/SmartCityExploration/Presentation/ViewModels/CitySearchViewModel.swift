@@ -169,15 +169,13 @@ final class CitySearchViewModel: Sendable {
              
             } catch {
                 // print("[CitySearchViewModel] Search error: \(error)")
-                // Handle cancellation
+                // ToDo: Handle cancellation
             }
         }
     }
     
     func selectCity(_ city: City) {
-        // Debug log to verify city coordinates
         // print("[CitySearchViewModel] Selecting city: \(city.name)")
-        // print("[CitySearchViewModel] City coordinates: lat=\(city.coord.lat), lon=\(city.coord.lon)")
         
         onCitySelected?(city)
         
