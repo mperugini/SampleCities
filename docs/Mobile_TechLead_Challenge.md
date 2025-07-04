@@ -34,15 +34,37 @@ This document presents the complete technical solution for the "Smart City Explo
 #### 2.1.1 Clean Architecture + MVVM
 **Decision:** Implement Clean Architecture with MVVM in the presentation layer.
 
+
 **Rationale:**
 - **Separation of concerns:** Enables independent testing of each layer
 - **Scalability:** Facilitates adding new features without affecting existing code
 - **Maintainability:** More readable and organized code
-- **Delivery velocity:** Multiple developers can work in parallel
+- **Delivery velocity:** Multiple developers can work in parallel on different layers
+- **Testability:** Each layer can be tested in isolation
 
 **Alternatives considered:**
 - VIPER: Too complex for the current scope
-- MVC: Not enough separation for testing
+
+Implementation Details:
+
+#### Project Structure
+- **SmartCityExploration/**
+  - **Domain/**
+    - Entities/
+    - UseCases/
+    - RepositoryProtocols/
+  - **Data/**
+    - Repositories/
+    - DataSources/
+    - DTOs/
+  - **Presentation/**
+    - Views/
+    - ViewModels/
+    - Coordinators/
+  - **Core/**
+    - DependencyInjection/
+    - Extensions/
+
 
 #### 2.1.2 SearchIndex for Optimized Search
 **Decision:** Implement a hybrid index (SearchIndex) using linear search for short prefixes (<4 chars) and binary search for longer prefixes, over a sorted array of normalized names.
@@ -63,11 +85,52 @@ This document presents the complete technical solution for the "Smart City Explo
 
 ![Layered Architecture](assets/LayeredArchitecture.png)
 
+**Presentation Layer:**
+- **Views/**
+  - SearchView
+  - CityDetailView
+  - MapView
+  - FavoritesView
+- **ViewModels/**
+  - SearchViewModel
+  - CityDetailViewModel
+  - FavoritesViewModel
+- **Coordinators/**
+  - NavigationCoordinator
+
+**Domain Layer:**
+- **Entities/**
+  - City
+  - WeatherInfo
+- **UseCases/**
+  - SearchCitiesUseCase
+  - GetWeatherUseCase
+  - ManageFavoritesUseCase
+- **Repository Protocols/**
+  - CityRepository
+  - WeatherRepository
+
+**Data Layer:**
+- **Repositories/**
+  - CityRepositoryImpl
+  - WeatherRepositoryImpl
+- **DataSources/**
+  - LocalDataSource (Core Data)
+  - RemoteDataSource (API)
+- **Models/**
+  - CityDTO
+  - WeatherDTO
+
 ### 2.2.2 Data Flow Diagram
 
 ![Data Flow Diagram](assets/DataFlowDiagram.png)
 
-### 2.2.3 Sequence Diagram: Search Flow
+### 2.2.4 Sequence Diagram: Search Flow
+
+ ![Components Diagram](assets/ComponentArchitectureDiagram.png)
+
+
+### 2.2.4 Sequence Diagram: Search Flow
 
  ![Sequence Diagram](assets/sequenceDiagram.png)
 
